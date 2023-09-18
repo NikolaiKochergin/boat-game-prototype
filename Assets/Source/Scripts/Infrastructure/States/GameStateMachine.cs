@@ -11,7 +11,13 @@ namespace Source.Scripts.Infrastructure.States
 
         public GameStateMachine(SceneLoader sceneLoader, AllServices services)
         {
-            
+            _states = new Dictionary<Type, IExitableState>
+            {
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+                [typeof(LoadProgressState)] = new LoadProgressState(this),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+                [typeof(GameLoopState)] = new GameLoopState(),
+            };
         }
 
         public void Enter<TState>() where TState : class, IState
@@ -20,7 +26,13 @@ namespace Source.Scripts.Infrastructure.States
             state.Enter();
         }
 
-        private TState ChangeState<TState>() where TState : class, IState
+        public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
+        {
+            TState state = ChangeState<TState>();
+            state.Enter(payload);
+        }
+
+        private TState ChangeState<TState>() where TState : class, IExitableState
         {
             _activeState?.Exit();
             TState state = GetState<TState>();
