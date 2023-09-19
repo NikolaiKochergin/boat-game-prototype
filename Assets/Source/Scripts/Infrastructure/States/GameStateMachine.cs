@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Source.Scripts.Services;
+using Source.Scripts.Services.Factory;
+using Source.Scripts.Services.PersistentProgress;
+using Source.Scripts.Services.SaveLoad;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -14,8 +17,12 @@ namespace Source.Scripts.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadProgressState)] = new LoadProgressState(this),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+                [typeof(LoadProgressState)] = new LoadProgressState(this,
+                    services.Single<IPersistentProgressService>(),
+                    services.Single<ISaveLoadService>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,
+                    services.Single<IGameFactory>(),
+                    services.Single<IPersistentProgressService>()),
                 [typeof(GameLoopState)] = new GameLoopState(),
             };
         }
