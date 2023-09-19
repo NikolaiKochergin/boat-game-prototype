@@ -1,8 +1,10 @@
 using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Services;
+using Source.Scripts.Services.Camera;
 using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.Input;
 using Source.Scripts.Services.PersistentProgress;
+using Source.Scripts.Services.Race;
 using Source.Scripts.Services.SaveLoad;
 using Source.Scripts.Services.StaticData;
 
@@ -44,6 +46,14 @@ namespace Source.Scripts.Infrastructure.States
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssets>(),
                 _services.Single<IStaticDataService>()));
+            
+            _services.RegisterSingle<ICameraService>(new CameraService(
+                _services.Single<IGameFactory>()));
+            
+            _services.RegisterSingle<IRaceService>(new RaceService(
+                _services.Single<IGameFactory>(),
+                _services.Single<IInputService>(),
+                _services.Single<ICameraService>()));
             
             _services.RegisterSingle<ISaveLoadService>(SaveLoadService());
         }

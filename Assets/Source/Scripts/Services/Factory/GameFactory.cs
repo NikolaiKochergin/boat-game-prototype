@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Cinemachine;
 using Source.Scripts.Infrastructure.AssetManagement;
+using Source.Scripts.Logic;
+using Source.Scripts.Player;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.StaticData;
 using Object = UnityEngine.Object;
@@ -22,6 +25,21 @@ namespace Source.Scripts.Services.Factory
             _assets = assets;
             _staticData = staticData;
         }
+
+        public Ship CreateRedShip() => 
+            InstantiateRegistered<Ship>(AssetPath.ShipRed);
+
+        public Ship CreateBlueShip() => 
+            InstantiateRegistered<Ship>(AssetPath.ShipBlue);
+
+        public CinemachineVirtualCamera CreateGameCamera() => 
+            _assets.Instantiate<CinemachineVirtualCamera>(AssetPath.GameCamera);
+
+        public TrackPoint CreateTrackPoint() => 
+            _assets.Instantiate<TrackPoint>(AssetPath.TrackPoint);
+
+        public Finish CreateFinishLine() => 
+            _assets.Instantiate<Finish>(AssetPath.FinishLine);
 
         public void CleanUp()
         {

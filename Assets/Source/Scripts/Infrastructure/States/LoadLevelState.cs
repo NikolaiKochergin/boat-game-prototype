@@ -1,5 +1,6 @@
 ﻿using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.PersistentProgress;
+using Source.Scripts.Services.Race;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -9,17 +10,20 @@ namespace Source.Scripts.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly IGameFactory _gameFactory;
         private readonly IPersistentProgressService _progressService;
+        private readonly IRaceService _raceService;
 
         public LoadLevelState(
             GameStateMachine stateMachine, 
             SceneLoader sceneLoader,
             IGameFactory gameFactory,
-            IPersistentProgressService progressService)
+            IPersistentProgressService progressService,
+            IRaceService raceService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _gameFactory = gameFactory;
             _progressService = progressService;
+            _raceService = raceService;
         }
         public void Enter(string sceneName)
         {
@@ -40,7 +44,7 @@ namespace Source.Scripts.Infrastructure.States
 
         private void InitGameWorld()
         {
-            
+            _raceService.PrepareToRace();
         }
 
         private void InformProgressReaders()

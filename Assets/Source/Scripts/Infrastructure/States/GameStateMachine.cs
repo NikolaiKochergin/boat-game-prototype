@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Source.Scripts.Services;
 using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.PersistentProgress;
+using Source.Scripts.Services.Race;
 using Source.Scripts.Services.SaveLoad;
 
 namespace Source.Scripts.Infrastructure.States
@@ -22,7 +23,8 @@ namespace Source.Scripts.Infrastructure.States
                     services.Single<ISaveLoadService>()),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,
                     services.Single<IGameFactory>(),
-                    services.Single<IPersistentProgressService>()),
+                    services.Single<IPersistentProgressService>(),
+                    services.Single<IRaceService>()),
                 [typeof(GameLoopState)] = new GameLoopState(),
             };
         }
