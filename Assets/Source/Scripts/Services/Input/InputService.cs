@@ -1,18 +1,20 @@
-﻿using Source.Scripts.Logic;
-using Source.Scripts.Services.Race;
+﻿using Source.Scripts.Infrastructure.States;
+using Source.Scripts.Logic;
+using UnityEngine;
 
 namespace Source.Scripts.Services.Input
 {
     public class InputService : IInputService
     {
         private readonly InputActions _inputActions;
+        private readonly GameStateMachine _gameStateMachine;
         
         private PlayerInput _leftPlayer;
         private PlayerInput _rightPlayer;
-        private IRaceService _raceService;
 
-        public InputService()
+        public InputService(GameStateMachine gameStateMachine)
         {
+            _gameStateMachine = gameStateMachine;
             _inputActions = new InputActions();
             _inputActions.PlayerLeft.MoveLeft.performed += ctx => OnPlayerLeftMove();
             _inputActions.PlayerLeft.MoveRight.performed += ctx => OnPlayerLeftMove();
@@ -23,9 +25,8 @@ namespace Source.Scripts.Services.Input
             _inputActions.Menu.StartRace.performed += ctx => OnStartRace();
         }
 
-        public void Initialize(IRaceService raceService, PlayerInput leftPlayer, PlayerInput rightPlayer)
+        public void Initialize(PlayerInput leftPlayer, PlayerInput rightPlayer)
         {
-            _raceService = raceService;
             _leftPlayer = leftPlayer;
             _rightPlayer = rightPlayer;
         }
@@ -57,7 +58,7 @@ namespace Source.Scripts.Services.Input
         private void OnStartRace()
         {
             _inputActions.Menu.Disable();
-            _raceService.StartRace();
+            _gameStateMachine.Enter<RaceProgressState>();
         }
     }
 }

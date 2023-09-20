@@ -44,7 +44,7 @@ namespace Source.Scripts.Infrastructure.States
             InitUI();
             InitGameWorld();
             InformProgressReaders();
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<RacePrepareState>();
         }
 
         private void InitUI() => 

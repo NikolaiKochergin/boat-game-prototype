@@ -39,7 +39,7 @@ namespace Source.Scripts.Services.Race
             _redShip.TriggerObserver.TriggerEnter += OnRedShipWin;
             _blueShip.TriggerObserver.TriggerEnter += OnBlueShipWin;
             
-            _input.Initialize(this, _redShip.Input, _blueShip.Input);
+            _input.Initialize( _redShip.Input, _blueShip.Input);
 
             _redShip.transform.position = new Vector3(-3.5f, 0, 0);
             _blueShip.transform.position = new Vector3(3.5f, 0, 0);
@@ -84,7 +84,9 @@ namespace Source.Scripts.Services.Race
             _blueShip.TriggerObserver.TriggerEnter -= OnBlueShipWin;
             
             _input.DisablePlayersInput();
-            _input.EnableMenuInput();
+            
+            _redShip.Mover.SetFinishPositionZ(_finishLine.transform.position.z);
+            _blueShip.Mover.SetFinishPositionZ(_finishLine.transform.position.z);
         }
 
         private float GetShipPosition(Transform shipTransform) => 

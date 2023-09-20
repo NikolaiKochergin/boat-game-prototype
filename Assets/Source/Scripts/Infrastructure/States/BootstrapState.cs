@@ -57,7 +57,7 @@ namespace Source.Scripts.Infrastructure.States
                 _services.Single<IStaticDataService>()));
             
             _services.RegisterSingle<IWindowService>(new WindowService(
-                _services.Single<UIFactory>()));
+                _services.Single<IUIFactory>()));
             
             _services.RegisterSingle<IRaceService>(new RaceService(
                 _services.Single<IGameFactory>(),
@@ -74,8 +74,8 @@ namespace Source.Scripts.Infrastructure.States
             _services.RegisterSingle(staticData);
         }
 
-        private static IInputService InputService() => 
-            new InputService();
+        private IInputService InputService() => 
+            new InputService(_stateMachine);
 
         private ISaveLoadService SaveLoadService() =>
             new PrefsSaveLoadService(

@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 2981807138429230263}
+  _mover: {fileID: 5050442636636065773}
   _triggerObserver: {fileID: 4058300849059971296}
 --- !u!114 &5050442636636065773
 MonoBehaviour:

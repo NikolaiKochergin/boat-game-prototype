@@ -6,6 +6,7 @@ using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.Race;
 using Source.Scripts.Services.SaveLoad;
 using Source.Scripts.UI.Factory;
+using Source.Scripts.UI.Services;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -27,9 +28,13 @@ namespace Source.Scripts.Infrastructure.States
                     services.Single<IUIFactory>(),
                     services.Single<IPersistentProgressService>(),
                     services.Single<IRaceService>()),
-                [typeof(GameLoopState)] = new GameLoopState(this,
+                [typeof(RacePrepareState)] = new RacePrepareState(
+                    services.Single<IWindowService>()),
+                [typeof(RaceProgressState)] = new RaceProgressState(this,
+                    services.Single<IWindowService>(),
                     services.Single<IRaceService>()),
-                [typeof(EndLevelState)] = new EndLevelState(),
+                [typeof(RaceOverState)] = new RaceOverState(this,
+                    services.Single<IWindowService>()),
             };
         }
 

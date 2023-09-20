@@ -1,43 +1,48 @@
 ﻿using Source.Scripts.Services.Race;
+using Source.Scripts.UI.Services;
 
 namespace Source.Scripts.Infrastructure.States
 {
-    public class GameLoopState : IState
+    public class RaceProgressState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
+        private readonly IWindowService _windows;
         private readonly IRaceService _raceService;
 
-        public GameLoopState(GameStateMachine gameStateMachine, IRaceService raceService)
+        public RaceProgressState(
+            GameStateMachine gameStateMachine,
+            IWindowService windows,
+            IRaceService raceService)
         {
             _gameStateMachine = gameStateMachine;
+            _windows = windows;
             _raceService = raceService;
         }
         
         public void Enter()
         {
+            _raceService.StartRace();
             _raceService.RedShipWin += OnRedShipWin;
             _raceService.BlueShipWin += OnBlueShipWin;
+            _windows.OpenWindow(WindowId.RaceProgress);
         }
 
         public void Exit()
         {
+            _windows.CloseWindow(WindowId.RaceProgress);
         }
 
-        private void OnRedShipWin()
-        {
+        private void OnRedShipWin() => 
             Cleanup();
-        }
 
-        private void OnBlueShipWin()
-        {
+        private void OnBlueShipWin() => 
             Cleanup();
-        }
 
         private void Cleanup()
         {
             _raceService.RedShipWin -= OnRedShipWin;
             _raceService.BlueShipWin -= OnBlueShipWin;
-            _gameStateMachine.Enter<EndLevelState>();
+            _gameStateMachine.Enter<RaceOverState>();
         }
     }
 }
