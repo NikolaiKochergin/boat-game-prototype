@@ -7,6 +7,8 @@ using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.Race;
 using Source.Scripts.Services.SaveLoad;
 using Source.Scripts.Services.StaticData;
+using Source.Scripts.UI.Factory;
+using Source.Scripts.UI.Services;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -49,6 +51,13 @@ namespace Source.Scripts.Infrastructure.States
             
             _services.RegisterSingle<ICameraService>(new CameraService(
                 _services.Single<IGameFactory>()));
+            
+            _services.RegisterSingle<IUIFactory>(new UIFactory(
+                _services.Single<IAssets>(),
+                _services.Single<IStaticDataService>()));
+            
+            _services.RegisterSingle<IWindowService>(new WindowService(
+                _services.Single<UIFactory>()));
             
             _services.RegisterSingle<IRaceService>(new RaceService(
                 _services.Single<IGameFactory>(),

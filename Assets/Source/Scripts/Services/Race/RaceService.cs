@@ -25,6 +25,9 @@ namespace Source.Scripts.Services.Race
             _cameraService = cameraService;
         }
 
+        public float RedShipPosition => GetShipPosition(_redShip.transform);
+        public float BlueShipPosition => GetShipPosition(_blueShip.transform);
+
         public event Action RedShipWin;
         public event Action BlueShipWin;
 
@@ -83,5 +86,8 @@ namespace Source.Scripts.Services.Race
             _input.DisablePlayersInput();
             _input.EnableMenuInput();
         }
+
+        private float GetShipPosition(Transform shipTransform) => 
+            Mathf.Clamp(shipTransform.position.z / _finishLine.transform.position.z, 0, 1);
     }
 }

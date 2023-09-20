@@ -280,4 +280,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _power: 1
-  _reductionSpeed: 1
+  _reductionSpeed: 5

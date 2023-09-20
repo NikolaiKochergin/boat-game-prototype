@@ -5,6 +5,7 @@ using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.Race;
 using Source.Scripts.Services.SaveLoad;
+using Source.Scripts.UI.Factory;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -23,9 +24,12 @@ namespace Source.Scripts.Infrastructure.States
                     services.Single<ISaveLoadService>()),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,
                     services.Single<IGameFactory>(),
+                    services.Single<IUIFactory>(),
                     services.Single<IPersistentProgressService>(),
                     services.Single<IRaceService>()),
-                [typeof(GameLoopState)] = new GameLoopState(),
+                [typeof(GameLoopState)] = new GameLoopState(this,
+                    services.Single<IRaceService>()),
+                [typeof(EndLevelState)] = new EndLevelState(),
             };
         }
 
