@@ -12,7 +12,7 @@ namespace Source.Scripts.Services.Factory
         IEnumerable<ISavedProgress> ProgressWriters { get; }
         Ship CreateRedShip();
         Ship CreateBlueShip();
-        void CleanUp();
+        void Cleanup();
         CinemachineVirtualCamera CreateGameCamera();
         TrackPoint CreateTrackPoint();
         Finish CreateFinishLine();

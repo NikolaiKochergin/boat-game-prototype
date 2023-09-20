@@ -1,4 +1,5 @@
 ﻿using System;
+using Source.Scripts.Extensions;
 using Source.Scripts.Logic;
 using Source.Scripts.Player;
 using Source.Scripts.Services.Camera;
@@ -17,6 +18,7 @@ namespace Source.Scripts.Services.Race
         private Ship _redShip;
         private Ship _blueShip;
         private Finish _finishLine;
+        private TrackPoint _trackPoint;
 
         public RaceService(IGameFactory factory, IInputService input, ICameraService cameraService)
         {
@@ -44,9 +46,9 @@ namespace Source.Scripts.Services.Race
             _redShip.transform.position = new Vector3(-3.5f, 0, 0);
             _blueShip.transform.position = new Vector3(3.5f, 0, 0);
 
-            TrackPoint trackPoint = _factory.CreateTrackPoint();
-            trackPoint.StartTrack(_redShip.transform, _blueShip.transform);
-            _cameraService.SetTrackPoint(trackPoint.transform);
+            _trackPoint = _factory.CreateTrackPoint();
+            _trackPoint.StartTrack(_redShip.transform, _blueShip.transform);
+            _cameraService.SetTrackPoint(_trackPoint.transform);
 
             _finishLine = _factory.CreateFinishLine();
             _finishLine.transform.position = new Vector3(0, 0, 100);
@@ -76,6 +78,14 @@ namespace Source.Scripts.Services.Race
         {
             _input.DisableMenuInput();
             _input.EnablePlayerInput();
+        }
+
+        public void Cleanup()
+        {
+            _trackPoint?.Destroy();
+            _redShip?.Destroy();
+            _blueShip?.Destroy();
+            _finishLine?.Destroy();
         }
 
         private void StopRace()

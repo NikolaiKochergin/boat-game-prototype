@@ -10,5 +10,6 @@ namespace Source.Scripts.UI.Factory
         WindowBase CreateRacePrepareWindow();
         WindowBase CreateRaceProgressWindow();
         WindowBase CreateRaceOverWindow();
+        void Cleanup();
     }
 }

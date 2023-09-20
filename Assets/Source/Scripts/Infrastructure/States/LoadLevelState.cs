@@ -59,7 +59,11 @@ namespace Source.Scripts.Infrastructure.States
                 progressReader.LoadProgress(_progressService.Progress);
         }
 
-        private void CleanUp() => 
-            _gameFactory.CleanUp();
+        private void CleanUp()
+        {
+            _gameFactory.Cleanup();
+            _uiFactory.Cleanup();
+            _raceService.Cleanup();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Source.Scripts.Infrastructure.AssetManagement;
+﻿using Source.Scripts.Extensions;
+using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Services.StaticData;
 using Source.Scripts.UI.Services;
 using Source.Scripts.UI.StaticData;
@@ -46,6 +47,12 @@ namespace Source.Scripts.UI.Factory
         {
             WindowConfig config = _staticData.ForWindow(WindowId.RaceOver);
             return Object.Instantiate(config.Prefab, _uiRoot);
+        }
+
+        public void Cleanup()
+        {
+            _uiRoot?.Destroy();
+            _uiRoot = null;
         }
     }
 }

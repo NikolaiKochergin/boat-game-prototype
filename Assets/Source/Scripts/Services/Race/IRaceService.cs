@@ -10,5 +10,6 @@ namespace Source.Scripts.Services.Race
         event Action BlueShipWin;
         void PrepareToRace();
         void StartRace();
+        void Cleanup();
     }
 }

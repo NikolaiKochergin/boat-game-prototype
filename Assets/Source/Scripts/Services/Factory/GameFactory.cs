@@ -41,7 +41,7 @@ namespace Source.Scripts.Services.Factory
         public Finish CreateFinishLine() => 
             _assets.Instantiate<Finish>(AssetPath.FinishLine);
 
-        public void CleanUp()
+        public void Cleanup()
         {
             _progressReaders.Clear();
             _progressWriters.Clear();
