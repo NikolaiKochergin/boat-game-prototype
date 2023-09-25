@@ -1,41 +1,33 @@
 using System;
 using System.Collections.Generic;
-using Source.Scripts.Services;
-using Source.Scripts.Services.Factory;
-using Source.Scripts.Services.PersistentProgress;
-using Source.Scripts.Services.Race;
-using Source.Scripts.Services.SaveLoad;
-using Source.Scripts.UI.Factory;
-using Source.Scripts.UI.Services;
+using UnityEngine;
+using VContainer;
 
 namespace Source.Scripts.Infrastructure.States
 {
     public class GameStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _states;
+        private readonly IObjectResolver _resolver;
+        private Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices services)
+        public GameStateMachine(IObjectResolver resolver) => 
+            _resolver = resolver;
+
+        public void RegisterStates()
         {
             _states = new Dictionary<Type, IExitableState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadProgressState)] = new LoadProgressState(this,
-                    services.Single<IPersistentProgressService>(),
-                    services.Single<ISaveLoadService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,
-                    services.Single<IGameFactory>(),
-                    services.Single<IUIFactory>(),
-                    services.Single<IPersistentProgressService>(),
-                    services.Single<IRaceService>()),
-                [typeof(RacePrepareState)] = new RacePrepareState(
-                    services.Single<IWindowService>()),
-                [typeof(RaceProgressState)] = new RaceProgressState(this,
-                    services.Single<IWindowService>(),
-                    services.Single<IRaceService>()),
-                [typeof(RaceOverState)] = new RaceOverState(this,
-                    services.Single<IWindowService>()),
+                [typeof(BootstrapState)] = _resolver.Resolve<BootstrapState>(),
+                [typeof(LoadProgressState)] = _resolver.Resolve<LoadProgressState>(),
+                [typeof(LoadLevelState)] = _resolver.Resolve<LoadLevelState>(),
+                [typeof(RacePrepareState)] = _resolver.Resolve<RacePrepareState>(),
+                [typeof(RaceProgressState)] = _resolver.Resolve<RaceProgressState>(),
+                [typeof(RaceOverState)] = _resolver.Resolve<RaceOverState>(),
             };
+            
+            if(_states.TryGetValue(typeof(LoadProgressState), out IExitableState value))
+                Debug.Log("check");
         }
 
         public void Enter<TState>() where TState : class, IState
