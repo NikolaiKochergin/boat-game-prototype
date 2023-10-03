@@ -25,7 +25,7 @@
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -45,8 +45,8 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
-      "depth": 1,
+      "version": "3.0.25",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.6"
@@ -158,6 +158,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.yellowsquad.assetpath": {
+      "version": "https://github.com/mdlka/com.yellowsquad.assetpath.git#2.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4e63373a25f750961262e5eba8f7a40d58442014"
     },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.13.2",

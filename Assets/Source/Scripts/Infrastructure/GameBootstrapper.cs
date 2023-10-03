@@ -12,7 +12,7 @@ namespace Source.Scripts.Infrastructure
 
         private void Start()
         {
-            _game = new Game(_vServices);
+            _game = new Game(_vServices.Container);
             _game.StateMachine.RegisterStates();
             _game.StateMachine.Enter<BootstrapState>();
             DontDestroyOnLoad(this);

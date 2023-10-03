@@ -25,9 +25,6 @@ namespace Source.Scripts.Infrastructure.States
                 [typeof(RaceProgressState)] = _resolver.Resolve<RaceProgressState>(),
                 [typeof(RaceOverState)] = _resolver.Resolve<RaceOverState>(),
             };
-            
-            if(_states.TryGetValue(typeof(LoadProgressState), out IExitableState value))
-                Debug.Log("check");
         }
 
         public void Enter<TState>() where TState : class, IState

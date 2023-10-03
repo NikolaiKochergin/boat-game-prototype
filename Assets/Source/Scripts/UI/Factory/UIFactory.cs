@@ -22,31 +22,34 @@ namespace Source.Scripts.UI.Factory
             _staticData = staticData;
         }
 
-        public void CreateUIRoot() => 
+        public void CreateUIRoot()
+        {
             _uiRoot = _assets.Instantiate<Transform>(UIRootPath);
+            _uiRoot.SetParent(null);
+        }
 
         public WindowBase CreateMainMenuWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.SettingsMenu);
-            return Object.Instantiate(config.Prefab, _uiRoot);
+            return _assets.Instantiate<SettingsWindow>(config.PrefabPath, _uiRoot);
         }
 
         public WindowBase CreateRacePrepareWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.RacePrepare);
-            return Object.Instantiate(config.Prefab, _uiRoot);
+            return _assets.Instantiate<RacePrepareWindow>(config.PrefabPath, _uiRoot);
         }
 
         public WindowBase CreateRaceProgressWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.RaceProgress);
-            return Object.Instantiate(config.Prefab, _uiRoot);
+            return _assets.Instantiate<RaceProgressWindow>(config.PrefabPath, _uiRoot);
         }
 
         public WindowBase CreateRaceOverWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.RaceOver);
-            return Object.Instantiate(config.Prefab, _uiRoot);
+            return _assets.Instantiate<RaceOverWindow>(config.PrefabPath, _uiRoot);
         }
 
         public void Cleanup()

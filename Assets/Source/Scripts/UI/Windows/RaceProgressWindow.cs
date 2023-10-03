@@ -1,7 +1,7 @@
-﻿using Source.Scripts.Services;
-using Source.Scripts.Services.Race;
+﻿using Source.Scripts.Services.Race;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Source.Scripts.UI.Windows
 {
@@ -12,14 +12,9 @@ namespace Source.Scripts.UI.Windows
         
         private IRaceService _raceService;
 
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-            Construct();
-        }
-
-        private void Construct() => 
-            _raceService = AllServices.Container.Single<IRaceService>();
+        [Inject]
+        private void Construct(IRaceService raceService) => 
+            _raceService = raceService;
 
         private void Update()
         {

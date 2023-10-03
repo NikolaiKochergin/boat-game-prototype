@@ -2,7 +2,6 @@
 using Source.Scripts.Data;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.SaveLoad;
-using UnityEngine;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -24,7 +23,6 @@ namespace Source.Scripts.Infrastructure.States
 
         public void Enter()
         {
-            Debug.Log("check loadprogress");
             LoadProgressOrInitNew(() =>
             {
                 _stateMachine.Enter<LoadLevelState, string>("GameScene");
