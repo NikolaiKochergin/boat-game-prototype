@@ -1,12 +1,13 @@
+using Reflex.Core;
 using Source.Scripts.Infrastructure.States;
-using Source.Scripts.Services;
 
 namespace Source.Scripts.Infrastructure
 {
     public class Game
     {
-        public GameStateMachine StateMachine;
-        public Game() => 
-            StateMachine = new GameStateMachine(new SceneLoader(), AllServices.Container);
+        public readonly GameStateMachine StateMachine;
+
+        public Game(Container container) => 
+            StateMachine = container.Construct<GameStateMachine>();
     }
 }

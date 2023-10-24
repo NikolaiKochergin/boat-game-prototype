@@ -1,12 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Source.Scripts.Services;
-using Source.Scripts.Services.Factory;
-using Source.Scripts.Services.PersistentProgress;
-using Source.Scripts.Services.Race;
-using Source.Scripts.Services.SaveLoad;
-using Source.Scripts.UI.Factory;
-using Source.Scripts.UI.Services;
+using Reflex.Core;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -15,26 +9,20 @@ namespace Source.Scripts.Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices services)
+        public GameStateMachine(Container container)
         {
+             Container statesContainer = new ContainerDescriptor("", container)
+                 .AddInstance(this, typeof(GameStateMachine))
+                 .Build();
+            
             _states = new Dictionary<Type, IExitableState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadProgressState)] = new LoadProgressState(this,
-                    services.Single<IPersistentProgressService>(),
-                    services.Single<ISaveLoadService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,
-                    services.Single<IGameFactory>(),
-                    services.Single<IUIFactory>(),
-                    services.Single<IPersistentProgressService>(),
-                    services.Single<IRaceService>()),
-                [typeof(RacePrepareState)] = new RacePrepareState(
-                    services.Single<IWindowService>()),
-                [typeof(RaceProgressState)] = new RaceProgressState(this,
-                    services.Single<IWindowService>(),
-                    services.Single<IRaceService>()),
-                [typeof(RaceOverState)] = new RaceOverState(this,
-                    services.Single<IWindowService>()),
+                [typeof(BootstrapState)] = statesContainer.Construct<BootstrapState>(),
+                [typeof(LoadProgressState)] = statesContainer.Construct<LoadProgressState>(),
+                [typeof(LoadLevelState)] = statesContainer.Construct<LoadLevelState>(),
+                [typeof(RacePrepareState)] = statesContainer.Construct<RacePrepareState>(),
+                [typeof(RaceProgressState)] = statesContainer.Construct<RaceProgressState>(),
+                [typeof(RaceOverState)] = statesContainer.Construct<RaceOverState>(),
             };
         }
 

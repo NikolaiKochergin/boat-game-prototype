@@ -1,14 +1,5 @@
-using Source.Scripts.Infrastructure.AssetManagement;
-using Source.Scripts.Services;
-using Source.Scripts.Services.Camera;
-using Source.Scripts.Services.Factory;
-using Source.Scripts.Services.Input;
-using Source.Scripts.Services.PersistentProgress;
-using Source.Scripts.Services.Race;
-using Source.Scripts.Services.SaveLoad;
+using Reflex.Core;
 using Source.Scripts.Services.StaticData;
-using Source.Scripts.UI.Factory;
-using Source.Scripts.UI.Services;
 
 namespace Source.Scripts.Infrastructure.States
 {
@@ -16,19 +7,19 @@ namespace Source.Scripts.Infrastructure.States
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly AllServices _services;
+        private readonly Container _container;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, Container container)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _services = services;
+            _container = container;
 
-            RegisterServices();
+            LoadStaticData();
         }
 
         public void Enter() => 
-            _sceneLoader?.Load("LoadingScene", onLoaded: EnterLoadLevel);
+            _sceneLoader.Load("LoadingScene", EnterLoadLevel);
 
         public void Exit()
         {
@@ -37,49 +28,7 @@ namespace Source.Scripts.Infrastructure.States
         private void EnterLoadLevel() => 
             _stateMachine.Enter<LoadProgressState>();
 
-        private void RegisterServices()
-        {
-            RegisterStaticDataService();
-            
-            _services.RegisterSingle<IInputService>(InputService());
-            _services.RegisterSingle<IAssets>(new Assets());
-            _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-            
-            _services.RegisterSingle<IGameFactory>(new GameFactory(
-                _services.Single<IAssets>(),
-                _services.Single<IStaticDataService>()));
-            
-            _services.RegisterSingle<ICameraService>(new CameraService(
-                _services.Single<IGameFactory>()));
-            
-            _services.RegisterSingle<IUIFactory>(new UIFactory(
-                _services.Single<IAssets>(),
-                _services.Single<IStaticDataService>()));
-            
-            _services.RegisterSingle<IWindowService>(new WindowService(
-                _services.Single<IUIFactory>()));
-            
-            _services.RegisterSingle<IRaceService>(new RaceService(
-                _services.Single<IGameFactory>(),
-                _services.Single<IInputService>(),
-                _services.Single<ICameraService>()));
-            
-            _services.RegisterSingle<ISaveLoadService>(SaveLoadService());
-        }
-
-        private void RegisterStaticDataService()
-        {
-            IStaticDataService staticData = new StaticDataService();
-            staticData.Load();
-            _services.RegisterSingle(staticData);
-        }
-
-        private IInputService InputService() => 
-            new InputService(_stateMachine);
-
-        private ISaveLoadService SaveLoadService() =>
-            new PrefsSaveLoadService(
-                _services.Single<IPersistentProgressService>(),
-                _services.Single<IGameFactory>());
+        private void LoadStaticData() => 
+            _container.Resolve<IStaticDataService>().Load();
     }
 }

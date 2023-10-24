@@ -1,4 +1,4 @@
-﻿using Source.Scripts.Services;
+﻿using Reflex.Attributes;
 using Source.Scripts.Services.Race;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,19 +12,22 @@ namespace Source.Scripts.UI.Windows
         
         private IRaceService _raceService;
 
-        protected override void OnAwake()
+        [Inject]
+        private void Construct(IRaceService raceService)
         {
-            base.OnAwake();
-            Construct();
+            _raceService = raceService;
         }
-
-        private void Construct() => 
-            _raceService = AllServices.Container.Single<IRaceService>();
 
         private void Update()
         {
-            _leftSlider.value = _raceService.RedShipPosition;
-            _rightSlider.value = _raceService.BlueShipPosition;
+            if(_raceService == null)
+                Debug.Log("NUUULLLLL");
+            else
+                Debug.Log("NOOOOOOOTTTTT");
+
+
+            // _leftSlider.value = _raceService.RedShipPosition;
+            // _rightSlider.value = _raceService.BlueShipPosition;
         }
     }
 }

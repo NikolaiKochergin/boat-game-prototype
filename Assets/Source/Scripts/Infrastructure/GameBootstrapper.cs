@@ -1,17 +1,21 @@
-﻿using Source.Scripts.Infrastructure.States;
+﻿using Reflex.Core;
+using Source.Scripts.Infrastructure.States;
 using UnityEngine;
 
 namespace Source.Scripts.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour
+    public class GameBootstrapper : MonoBehaviour , IInstaller
     {
         private Game _game;
 
-        private void Start()
+        public void InstallBindings(ContainerDescriptor descriptor)
         {
-            _game = new Game();
-            _game.StateMachine.Enter<BootstrapState>();
-            DontDestroyOnLoad(this);
+            descriptor.OnContainerBuilt += container =>
+            {
+                _game = container.Construct<Game>();
+                _game.StateMachine.Enter<BootstrapState>();
+                DontDestroyOnLoad(this);
+            };
         }
     }
 }
