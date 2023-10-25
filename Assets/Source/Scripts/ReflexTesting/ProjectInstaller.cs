@@ -23,7 +23,6 @@ namespace Source.Scripts.ReflexTesting
         public void InstallBindings(ContainerDescriptor descriptor)
         { 
             descriptor
-                .AddTransient(typeof(GameStateMachine))
                 .AddSingleton(typeof(SceneLoader))
                 .AddSingleton(typeof(StaticDataService), typeof(IStaticDataService))
                 .AddSingleton(typeof(InputService), typeof(IInputService))
@@ -42,12 +41,6 @@ namespace Source.Scripts.ReflexTesting
         private void OnProjectContainerBuilt(Container container)
         {
             Container = container;
-            //container.Construct<GameStateMachine>();
-
-            // container.Scope("ProjSM", descriptor =>
-            // {
-            //     descriptor.AddInstance(container.Construct<GameStateMachine>());
-            // });
         }
     }
 }
