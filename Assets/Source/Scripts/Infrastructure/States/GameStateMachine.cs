@@ -24,6 +24,16 @@ namespace Source.Scripts.Infrastructure.States
                 [typeof(RaceProgressState)] = statesContainer.Construct<RaceProgressState>(),
                 [typeof(RaceOverState)] = statesContainer.Construct<RaceOverState>(),
             };
+            
+            // _states = new Dictionary<Type, IExitableState>
+            // {
+            //     [typeof(BootstrapState)] = container.Construct<BootstrapState>(),
+            //     [typeof(LoadProgressState)] = container.Construct<LoadProgressState>(),
+            //     [typeof(LoadLevelState)] = container.Construct<LoadLevelState>(),
+            //     [typeof(RacePrepareState)] = container.Construct<RacePrepareState>(),
+            //     [typeof(RaceProgressState)] = container.Construct<RaceProgressState>(),
+            //     [typeof(RaceOverState)] = container.Construct<RaceOverState>(),
+            // };
         }
 
         public void Enter<TState>() where TState : class, IState

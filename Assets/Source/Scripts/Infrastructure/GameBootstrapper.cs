@@ -18,14 +18,13 @@ namespace Source.Scripts.Infrastructure
                 yield return null;
             }
             
-            var container = ProjectInstaller.Container;
+            Container container = ProjectInstaller.Container;
             
                 Debug.Log($"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{container.Name}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 
                 _game = container.Construct<Game>();
                 _game.StateMachine.Enter<BootstrapState>();
                 DontDestroyOnLoad(this);
-            
         }
 
         // public void InstallBindings(ContainerDescriptor descriptor)
