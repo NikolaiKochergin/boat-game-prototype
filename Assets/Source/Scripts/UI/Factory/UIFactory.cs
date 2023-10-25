@@ -1,5 +1,8 @@
-﻿using Source.Scripts.Extensions;
+﻿using Reflex.Core;
+using Reflex.Injectors;
+using Source.Scripts.Extensions;
 using Source.Scripts.Infrastructure.AssetManagement;
+using Source.Scripts.ReflexTesting;
 using Source.Scripts.Services.StaticData;
 using Source.Scripts.UI.Services;
 using Source.Scripts.UI.StaticData;
@@ -13,13 +16,15 @@ namespace Source.Scripts.UI.Factory
         private const string UIRootPath = "UI/UIRoot";
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
+        private readonly Container _container;
 
         private Transform _uiRoot;
 
-        public UIFactory(IAssets assets, IStaticDataService staticData)
+        public UIFactory(IAssets assets, IStaticDataService staticData, Container container)
         {
             _assets = assets;
             _staticData = staticData;
+            _container = container;
         }
 
         public void CreateUIRoot() => 
@@ -40,7 +45,13 @@ namespace Source.Scripts.UI.Factory
         public WindowBase CreateRaceProgressWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.RaceProgress);
-            return Object.Instantiate(config.Prefab, _uiRoot);
+            WindowBase window = Object.Instantiate(config.Prefab, _uiRoot);
+            
+            Debug.Log($">>>>>>>>>>>>>>>>>{_container.Name}<<<<<<<<<<<<<<<<<");
+            
+            AttributeInjector.Inject(window, _container);
+            
+            return window;
         }
 
         public WindowBase CreateRaceOverWindow()

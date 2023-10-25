@@ -1,21 +1,43 @@
-﻿using Reflex.Core;
+﻿using System;
+using System.Collections;
+using Reflex.Core;
 using Source.Scripts.Infrastructure.States;
+using Source.Scripts.ReflexTesting;
 using UnityEngine;
 
 namespace Source.Scripts.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour , IInstaller
+    public class GameBootstrapper : MonoBehaviour //, IInstaller
     {
         private Game _game;
 
-        public void InstallBindings(ContainerDescriptor descriptor)
+        private IEnumerator Start()
         {
-            descriptor.OnContainerBuilt += container =>
+            while (ProjectInstaller.Container == null)
             {
+                yield return null;
+            }
+            
+            var container = ProjectInstaller.Container;
+            
+                Debug.Log($"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{container.Name}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                
                 _game = container.Construct<Game>();
                 _game.StateMachine.Enter<BootstrapState>();
                 DontDestroyOnLoad(this);
-            };
+            
         }
+
+        // public void InstallBindings(ContainerDescriptor descriptor)
+        // {
+        //     descriptor.OnContainerBuilt += container =>
+        //     {
+        //         Debug.Log($"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{container.Name}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //         
+        //         _game = container.Construct<Game>();
+        //         _game.StateMachine.Enter<BootstrapState>();
+        //         DontDestroyOnLoad(this);
+        //     };
+        // }
     }
 }

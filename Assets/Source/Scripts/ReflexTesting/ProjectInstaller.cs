@@ -1,7 +1,7 @@
-﻿using Reflex.Core;
+﻿using System;
+using Reflex.Core;
 using Source.Scripts.Infrastructure;
 using Source.Scripts.Infrastructure.AssetManagement;
-using Source.Scripts.Infrastructure.States;
 using Source.Scripts.Services.Camera;
 using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.Input;
@@ -17,11 +17,14 @@ namespace Source.Scripts.ReflexTesting
 {
     public class ProjectInstaller : MonoBehaviour, IInstaller
     {
+        public static Container Container { get; private set; }
+
+        public static event Action<Container> OnContainerBuilt; 
+        
         public void InstallBindings(ContainerDescriptor descriptor)
-        {
+        { 
             descriptor
-                .AddSingleton(typeof(GameStateMachine), typeof(GameStateMachine))
-                .AddSingleton(typeof(SceneLoader), typeof(SceneLoader))
+                .AddSingleton(typeof(SceneLoader))
                 .AddSingleton(typeof(StaticDataService), typeof(IStaticDataService))
                 .AddSingleton(typeof(InputService), typeof(IInputService))
                 .AddSingleton(typeof(Assets), typeof(IAssets))
@@ -32,6 +35,14 @@ namespace Source.Scripts.ReflexTesting
                 .AddSingleton(typeof(WindowService), typeof(IWindowService))
                 .AddSingleton(typeof(RaceService), typeof(IRaceService))
                 .AddSingleton(typeof(PrefsSaveLoadService), typeof(ISaveLoadService));
+
+            descriptor.OnContainerBuilt += OnProjectContainerBuilt;
+        }
+
+        private void OnProjectContainerBuilt(Container container)
+        {
+            Container = container;
+            OnContainerBuilt?.Invoke(container);
         }
     }
 }

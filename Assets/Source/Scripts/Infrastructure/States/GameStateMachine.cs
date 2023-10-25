@@ -11,9 +11,9 @@ namespace Source.Scripts.Infrastructure.States
 
         public GameStateMachine(Container container)
         {
-             Container statesContainer = new ContainerDescriptor("", container)
-                 .AddInstance(this, typeof(GameStateMachine))
-                 .Build();
+            Container statesContainer = new ContainerDescriptor("GameStateMachine", container)
+                .AddInstance(this, typeof(GameStateMachine))
+                .Build();
             
             _states = new Dictionary<Type, IExitableState>
             {
