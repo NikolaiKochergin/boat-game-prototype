@@ -18,7 +18,7 @@ namespace Source.Scripts.ReflexTesting
 {
     public class ProjectInstaller : MonoBehaviour, IInstaller
     {
-        public static Container Container { get; private set; }
+        //public static Container Container { get; private set; }
         
         public void InstallBindings(ContainerDescriptor descriptor)
         { 
@@ -35,12 +35,12 @@ namespace Source.Scripts.ReflexTesting
                 .AddSingleton(typeof(RaceService), typeof(IRaceService))
                 .AddSingleton(typeof(PrefsSaveLoadService), typeof(ISaveLoadService));
 
-            descriptor.OnContainerBuilt += OnProjectContainerBuilt;
+            //descriptor.OnContainerBuilt += OnProjectContainerBuilt;
         }
 
-        private void OnProjectContainerBuilt(Container container)
-        {
-            Container = container;
-        }
+        // private void OnProjectContainerBuilt(Container container)
+        // {
+        //     Container = container;
+        // }
     }
 }
