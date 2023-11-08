@@ -31,7 +31,7 @@ namespace Source.Scripts.ReflexTesting
                 .AddSingleton(typeof(WindowService), typeof(IWindowService))
                 .AddSingleton(typeof(RaceService), typeof(IRaceService))
                 .AddSingleton(typeof(PrefsSaveLoadService), typeof(ISaveLoadService))
-                .AddSingleton(typeof(GameStateMachine), typeof(IStartable),  typeof(GameStateMachine));
+                .AddSingleton(typeof(GameStateMachine), typeof(IStartable),  typeof(IGameStateMachine));
         }
     }
 }

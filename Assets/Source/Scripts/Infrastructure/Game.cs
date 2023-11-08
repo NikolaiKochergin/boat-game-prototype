@@ -5,9 +5,9 @@ namespace Source.Scripts.Infrastructure
 {
     public class Game
     {
-        public readonly GameStateMachine StateMachine;
+        public readonly IGameStateMachine StateMachine;
 
         public Game(Container container) => 
-            StateMachine = container.Single<GameStateMachine>();
+            StateMachine = container.Single<IGameStateMachine>();
     }
 }

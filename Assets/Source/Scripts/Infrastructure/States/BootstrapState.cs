@@ -5,10 +5,10 @@ namespace Source.Scripts.Infrastructure.States
 {
     public class BootstrapState : IState
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameStateMachine _stateMachine;
         private readonly Container _container;
 
-        public BootstrapState(GameStateMachine stateMachine, Container container)
+        public BootstrapState(IGameStateMachine stateMachine, Container container)
         {
             _stateMachine = stateMachine;
             _container = container;

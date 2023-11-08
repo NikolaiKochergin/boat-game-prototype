@@ -4,7 +4,7 @@ using Reflex.Core;
 
 namespace Source.Scripts.Infrastructure.States
 {
-    public class GameStateMachine : IStartable
+    public class GameStateMachine : IStartable, IGameStateMachine
     {
         private readonly Container _container;
         private Dictionary<Type, IExitableState> _states;

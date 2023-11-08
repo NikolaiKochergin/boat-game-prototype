@@ -7,12 +7,12 @@ namespace Source.Scripts.Services.Input
     public class InputService : IInputService
     {
         private readonly InputActions _inputActions;
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly IGameStateMachine _gameStateMachine;
         
         private PlayerInput _leftPlayer;
         private PlayerInput _rightPlayer;
 
-        public InputService(GameStateMachine gameStateMachine)
+        public InputService(IGameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
             _inputActions = new InputActions();

@@ -42,11 +42,6 @@ namespace Source.Scripts.UI.Factory
             WindowConfig config = _staticData.ForWindow(WindowId.RaceProgress);
 
             WindowBase window = _assets.Inject(config.Prefab, _uiRoot);
-           // WindowBase window = Object.Instantiate(config.Prefab, _uiRoot);
-            
-            //Debug.Log($">>>>>>>>>>>>>>>>>{_container.Name}<<<<<<<<<<<<<<<<<");
-            
-            //AttributeInjector.Inject(window, _container);
             
             return window;
         }

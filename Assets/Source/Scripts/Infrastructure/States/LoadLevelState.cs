@@ -7,7 +7,7 @@ namespace Source.Scripts.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
@@ -15,7 +15,7 @@ namespace Source.Scripts.Infrastructure.States
         private readonly IRaceService _raceService;
 
         public LoadLevelState(
-            GameStateMachine stateMachine, 
+            IGameStateMachine stateMachine, 
             SceneLoader sceneLoader,
             IGameFactory gameFactory,
             IUIFactory uiFactory,

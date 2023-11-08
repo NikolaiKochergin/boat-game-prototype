@@ -6,10 +6,10 @@ namespace Source.Scripts.Infrastructure.States
 {
     public class RaceOverState : IState
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameStateMachine _stateMachine;
         private readonly IWindowService _windows;
 
-        public RaceOverState(GameStateMachine stateMachine, IWindowService windows)
+        public RaceOverState(IGameStateMachine stateMachine, IWindowService windows)
         {
             _stateMachine = stateMachine;
             _windows = windows;

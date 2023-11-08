@@ -5,12 +5,12 @@ namespace Source.Scripts.Infrastructure.States
 {
     public class RaceProgressState : IState
     {
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly IGameStateMachine _gameStateMachine;
         private readonly IWindowService _windows;
         private readonly IRaceService _raceService;
 
         public RaceProgressState(
-            GameStateMachine gameStateMachine,
+            IGameStateMachine gameStateMachine,
             IWindowService windows,
             IRaceService raceService)
         {

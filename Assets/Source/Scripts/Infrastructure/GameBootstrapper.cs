@@ -1,7 +1,7 @@
 ﻿using Reflex.Core;
 using Source.Scripts.Infrastructure.States;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 namespace Source.Scripts.Infrastructure
 {
@@ -11,14 +11,18 @@ namespace Source.Scripts.Infrastructure
 
         private void Start()
         {
-            DontDestroyOnLoad(this);
-            Scene loadScene = SceneManager.LoadScene("LoadingScene", new LoadSceneParameters(LoadSceneMode.Single));
-            ReflexSceneManager.PreInstallScene(loadScene,
-                descriptor => descriptor.OnContainerBuilt += container =>
-                {
-                    _game = container.Construct<Game>();
-                    _game.StateMachine.Enter<BootstrapState>();
-                });
+            Addressables.LoadSceneAsync("LoadingScene", activateOnLoad: false).Completed += handle =>
+            {
+                ReflexSceneManager.PreInstallScene(handle.Result.Scene, descriptor => descriptor.OnContainerBuilt += OnContainerBuilt);
+                handle.Result.ActivateAsync();
+                DontDestroyOnLoad(this);
+            };
+        }
+
+        private void OnContainerBuilt(Container container)
+        {
+            _game = container.Construct<Game>();
+            _game.StateMachine.Enter<BootstrapState>();
         }
     }
 }

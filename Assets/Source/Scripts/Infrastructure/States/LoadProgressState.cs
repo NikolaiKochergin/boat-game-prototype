@@ -7,12 +7,12 @@ namespace Source.Scripts.Infrastructure.States
 {
     public class LoadProgressState : IState
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameStateMachine _stateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoad;
 
         public LoadProgressState(
-            GameStateMachine stateMachine,
+            IGameStateMachine stateMachine,
             IPersistentProgressService progressService,
             ISaveLoadService saveLoad)
         {
