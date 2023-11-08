@@ -5,6 +5,7 @@ using Source.Scripts.Logic;
 using Source.Scripts.Player;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.StaticData;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Source.Scripts.Services.Factory
@@ -32,14 +33,23 @@ namespace Source.Scripts.Services.Factory
         public Ship CreateBlueShip() => 
             InstantiateRegistered<Ship>(AssetPath.ShipBlue);
 
-        public CinemachineVirtualCamera CreateGameCamera() => 
-            _assets.Instantiate<CinemachineVirtualCamera>(AssetPath.GameCamera);
+        public CinemachineVirtualCamera CreateGameCamera()
+        {
+            CinemachineVirtualCamera prefab = Resources.Load<CinemachineVirtualCamera>(AssetPath.GameCamera);
+            return Object.Instantiate(prefab);
+        }
 
-        public TrackPoint CreateTrackPoint() => 
-            _assets.Instantiate<TrackPoint>(AssetPath.TrackPoint);
+        public TrackPoint CreateTrackPoint()
+        {
+            TrackPoint prefab = Resources.Load<TrackPoint>(AssetPath.TrackPoint);
+            return Object.Instantiate(prefab);
+        }
 
-        public Finish CreateFinishLine() => 
-            _assets.Instantiate<Finish>(AssetPath.FinishLine);
+        public Finish CreateFinishLine()
+        {
+            Finish prefab = Resources.Load<Finish>(AssetPath.FinishLine);
+            return Object.Instantiate(prefab);
+        }
 
         public void Cleanup()
         {
@@ -49,10 +59,11 @@ namespace Source.Scripts.Services.Factory
 
         private T InstantiateRegistered<T>(string prefabPath) where T : Object, ISavedProgressReader
         {
-            T gameObject = _assets.Instantiate<T>(prefabPath);
-            Register(gameObject);
+            T prefab = Resources.Load<T>(prefabPath);
+            T newObject = Object.Instantiate(prefab);
+            Register(newObject);
 
-            return gameObject;
+            return newObject;
         }
 
         private void Register(ISavedProgressReader progressReader)

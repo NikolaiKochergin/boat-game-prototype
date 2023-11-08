@@ -1,4 +1,5 @@
-﻿using Reflex.Core;
+﻿using Cysharp.Threading.Tasks;
+using Reflex.Core;
 using Reflex.Injectors;
 using Source.Scripts.Extensions;
 using Source.Scripts.Infrastructure.AssetManagement;
@@ -11,7 +12,7 @@ namespace Source.Scripts.UI.Factory
 {
     public class UIFactory : IUIFactory
     {
-        private const string UIRootPath = "UI/UIRoot";
+        private const string UIRootAddress = "UIRoot";
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
         private readonly Container _container;
@@ -25,8 +26,14 @@ namespace Source.Scripts.UI.Factory
             _container = container;
         }
 
-        public void CreateUIRoot() => 
-            _uiRoot = _assets.Instantiate<Transform>(UIRootPath);
+        public async UniTaskVoid WarmUp() => 
+            await _assets.Load<GameObject>(UIRootAddress);
+
+        public async UniTask CreateUIRoot()
+        {
+            GameObject uiRootPrefab = await _assets.Load<GameObject>(UIRootAddress);
+            _uiRoot = Object.Instantiate(uiRootPrefab).transform;
+        }
 
         public WindowBase CreateWindow(WindowId id) => 
             InstantiateAndInject(_staticData.ForWindow(id).Prefab, _uiRoot);

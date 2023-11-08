@@ -1,4 +1,5 @@
-﻿using Source.Scripts.Services.Factory;
+﻿using Cysharp.Threading.Tasks;
+using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.Race;
 using Source.Scripts.UI.Factory;
@@ -32,23 +33,23 @@ namespace Source.Scripts.Infrastructure.States
         public void Enter(string sceneName)
         {
             CleanUp();
-            _sceneLoader.Load(sceneName, OnLoaded);
+            _sceneLoader.Load(sceneName, () => OnLoaded().Forget());
         }
 
         public void Exit()
         {
         }
 
-        private void OnLoaded()
+        private async UniTaskVoid OnLoaded()
         {
-            InitUI();
+            await InitUI();
             InitGameWorld();
             InformProgressReaders();
             _stateMachine.Enter<RacePrepareState>();
         }
 
-        private void InitUI() => 
-            _uiFactory.CreateUIRoot();
+        private async UniTask InitUI() => 
+            await _uiFactory.CreateUIRoot();
 
         private void InitGameWorld() => 
             _raceService.PrepareToRace();

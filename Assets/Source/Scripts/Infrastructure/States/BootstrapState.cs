@@ -1,4 +1,5 @@
 using Reflex.Core;
+using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Services.StaticData;
 
 namespace Source.Scripts.Infrastructure.States
@@ -14,6 +15,7 @@ namespace Source.Scripts.Infrastructure.States
             _container = container;
 
             LoadStaticData();
+            InitializeAssets();
         }
 
         public void Enter() => EnterLoadLevel();
@@ -25,5 +27,8 @@ namespace Source.Scripts.Infrastructure.States
 
         private void LoadStaticData() => 
             _container.Resolve<IStaticDataService>().Load();
+
+        private void InitializeAssets() => 
+            _container.Resolve<IAssets>().Initialize();
     }
 }

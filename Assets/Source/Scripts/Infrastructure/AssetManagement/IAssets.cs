@@ -1,11 +1,14 @@
+using Cysharp.Threading.Tasks;
 using Source.Scripts.Services;
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Source.Scripts.Infrastructure.AssetManagement
 {
     public interface IAssets : IService
     {
-        T Instantiate<T>(string path) where T : Object;
-        T Instantiate<T>(string path, Vector3 at, Quaternion rotation) where T : Object;
+        UniTask<T> Load<T>(AssetReference assetReference) where T : class;
+        UniTask<T> Load<T>(string address) where T : class;
+        void Cleanup();
+        void Initialize();
     }
 }
