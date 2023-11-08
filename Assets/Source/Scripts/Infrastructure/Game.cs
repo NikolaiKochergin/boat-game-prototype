@@ -8,6 +8,6 @@ namespace Source.Scripts.Infrastructure
         public readonly GameStateMachine StateMachine;
 
         public Game(Container container) => 
-            StateMachine = container.Construct<GameStateMachine>();
+            StateMachine = container.Resolve<GameStateMachine>();
     }
 }

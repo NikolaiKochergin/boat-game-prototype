@@ -1,5 +1,4 @@
-﻿using System;
-using Reflex.Core;
+﻿using Reflex.Core;
 using Source.Scripts.Infrastructure;
 using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Infrastructure.States;
@@ -18,10 +17,8 @@ namespace Source.Scripts.ReflexTesting
 {
     public class ProjectInstaller : MonoBehaviour, IInstaller
     {
-        //public static Container Container { get; private set; }
-        
         public void InstallBindings(ContainerDescriptor descriptor)
-        { 
+        {
             descriptor
                 .AddSingleton(typeof(SceneLoader))
                 .AddSingleton(typeof(StaticDataService), typeof(IStaticDataService))
@@ -33,14 +30,8 @@ namespace Source.Scripts.ReflexTesting
                 .AddSingleton(typeof(UIFactory), typeof(IUIFactory))
                 .AddSingleton(typeof(WindowService), typeof(IWindowService))
                 .AddSingleton(typeof(RaceService), typeof(IRaceService))
-                .AddSingleton(typeof(PrefsSaveLoadService), typeof(ISaveLoadService));
-
-            //descriptor.OnContainerBuilt += OnProjectContainerBuilt;
+                .AddSingleton(typeof(PrefsSaveLoadService), typeof(ISaveLoadService))
+                .AddSingleton(typeof(GameStateMachine), typeof(IStartable), typeof(GameStateMachine));
         }
-
-        // private void OnProjectContainerBuilt(Container container)
-        // {
-        //     Container = container;
-        // }
     }
 }

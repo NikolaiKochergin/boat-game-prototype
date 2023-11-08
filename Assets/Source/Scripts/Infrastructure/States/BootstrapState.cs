@@ -6,24 +6,19 @@ namespace Source.Scripts.Infrastructure.States
     public class BootstrapState : IState
     {
         private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
         private readonly Container _container;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, Container container)
+        public BootstrapState(GameStateMachine stateMachine, Container container)
         {
             _stateMachine = stateMachine;
-            _sceneLoader = sceneLoader;
             _container = container;
 
             LoadStaticData();
         }
 
-        public void Enter() => 
-            _sceneLoader.Load("LoadingScene", EnterLoadLevel);
+        public void Enter() => EnterLoadLevel();
 
-        public void Exit()
-        {
-        }
+        public void Exit() { }
 
         private void EnterLoadLevel() => 
             _stateMachine.Enter<LoadProgressState>();

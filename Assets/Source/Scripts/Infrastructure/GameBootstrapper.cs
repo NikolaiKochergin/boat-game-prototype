@@ -2,12 +2,12 @@
 using System.Collections;
 using Reflex.Core;
 using Source.Scripts.Infrastructure.States;
-using Source.Scripts.ReflexTesting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Source.Scripts.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour , IInstaller
+    public class GameBootstrapper : MonoBehaviour //, IInstaller
     {
         private Game _game;
 
@@ -27,16 +27,49 @@ namespace Source.Scripts.Infrastructure
         //         DontDestroyOnLoad(this);
         // }
 
-        public void InstallBindings(ContainerDescriptor descriptor)
+        private void Start()
         {
-            descriptor.OnContainerBuilt += container =>
-            {
-                Debug.Log($"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{container.Name}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                
-                _game = container.Parent.Construct<Game>();
-                _game.StateMachine.Enter<BootstrapState>();
-                DontDestroyOnLoad(this);
-            };
+            DontDestroyOnLoad(this);
+            Scene loadScene = SceneManager.LoadScene("LoadingScene", new LoadSceneParameters(LoadSceneMode.Single));
+            ReflexSceneManager.PreInstallScene(loadScene,
+                descriptor => descriptor.OnContainerBuilt += container =>
+                {
+                    Debug.Log("---------------------->" + container.Name);
+        
+                    _game = container.Construct<Game>(); // new Game(container); // container.Construct<Game>();
+                    _game.StateMachine.Enter<BootstrapState>();
+                });
         }
+
+        // private void Start()
+        // {
+        //     DontDestroyOnLoad(this);
+        //     Scene loadScene = SceneManager.LoadScene("LoadingScene", new LoadSceneParameters(LoadSceneMode.Single));
+        //     ReflexSceneManager.PreInstallScene(loadScene, descriptor =>
+        //     {
+        //     });
+        // }
+
+        // public void InstallBindings(ContainerDescriptor descriptor)
+        // {
+        //     descriptor.OnContainerBuilt += container =>
+        //     {
+        //         Debug.Log($"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{container.Name}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //         
+        //         _game = container.Parent.Construct<Game>();
+        //         _game.StateMachine.Enter<BootstrapState>();
+        //         DontDestroyOnLoad(this);
+        //     };
+        // }
+        // public void InstallBindings(ContainerDescriptor descriptor)
+        // {
+        //     descriptor.OnContainerBuilt += container =>
+        //     {
+        //         Debug.Log("Check");
+        //         _game = container.Construct<Game>();
+        //         _game.StateMachine.Enter<BootstrapState>();
+        //         DontDestroyOnLoad(this);
+        //     };
+        // }
     }
 }
