@@ -14,21 +14,8 @@ namespace Source.Scripts.UI.Services
 
         public void OpenWindow(WindowId windowId)
         {
-            switch (windowId)
-            {
-                case WindowId.SettingsMenu:
-                    _openedWindows.Add(WindowId.SettingsMenu, _uiFactory.CreateMainMenuWindow());
-                    break;
-                case WindowId.RacePrepare:
-                    _openedWindows.Add(WindowId.RacePrepare, _uiFactory.CreateRacePrepareWindow());
-                    break;
-                case WindowId.RaceProgress:
-                    _openedWindows.Add(WindowId.RaceProgress, _uiFactory.CreateRaceProgressWindow());
-                    break;
-                case WindowId.RaceOver:
-                    _openedWindows.Add(WindowId.RaceOver, _uiFactory.CreateRaceOverWindow());
-                    break;
-            }
+            if (_openedWindows.ContainsKey(windowId) == false)
+                _openedWindows.Add(windowId, _uiFactory.CreateWindow(windowId));
         }
 
         public void CloseWindow(WindowId windowId)

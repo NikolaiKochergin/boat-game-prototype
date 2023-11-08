@@ -7,6 +7,5 @@ namespace Source.Scripts.Infrastructure.AssetManagement
     {
         T Instantiate<T>(string path) where T : Object;
         T Instantiate<T>(string path, Vector3 at, Quaternion rotation) where T : Object;
-        T Inject<T>(T prefab, Transform parent) where T : Component;
     }
 }
