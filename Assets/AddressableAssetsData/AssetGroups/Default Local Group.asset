@@ -16,7 +16,42 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 78cd3028e036b1c4085b3d8bc3f1e3d7
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6952962d549225e4090d2c25e6f64e4c
+    m_Address: RaceOverWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a1d5bc47fbc99b468847a1ce237004b
+    m_Address: RaceProgressWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84c8ca4f8eb8a5e4f9f9061cb27082db
+    m_Address: RacePrepareWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3e39039cc9ed454bbd92a781e0a7324
+    m_Address: SettingsWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a541fc96bb759449b84157fb40a2a19
+    m_Address: UIRoot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b75ba874ae33e345b05d905355a5b1e
+    m_Address: ShipRed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6e9e2a1c2e70d34cb0278fbd0b9ded4
+    m_Address: ShipBlue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 85f0185453b4e4948bfb1a97253e11f9, type: 2}
   m_SchemaSet:

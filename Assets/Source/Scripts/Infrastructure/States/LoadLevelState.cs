@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Services.Factory;
 using Source.Scripts.Services.PersistentProgress;
 using Source.Scripts.Services.Race;
@@ -14,6 +15,7 @@ namespace Source.Scripts.Infrastructure.States
         private readonly IUIFactory _uiFactory;
         private readonly IPersistentProgressService _progressService;
         private readonly IRaceService _raceService;
+        private readonly IAssets _assets;
 
         public LoadLevelState(
             IGameStateMachine stateMachine, 
@@ -21,7 +23,8 @@ namespace Source.Scripts.Infrastructure.States
             IGameFactory gameFactory,
             IUIFactory uiFactory,
             IPersistentProgressService progressService,
-            IRaceService raceService)
+            IRaceService raceService,
+            IAssets assets)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -29,6 +32,7 @@ namespace Source.Scripts.Infrastructure.States
             _uiFactory = uiFactory;
             _progressService = progressService;
             _raceService = raceService;
+            _assets = assets;
         }
         public void Enter(string sceneName)
         {
@@ -65,6 +69,10 @@ namespace Source.Scripts.Infrastructure.States
             _gameFactory.Cleanup();
             _uiFactory.Cleanup();
             _raceService.Cleanup();
+            _assets.Cleanup();
+
+            _gameFactory.WarmUp();
+            _uiFactory.WarmUp();
         }
     }
 }

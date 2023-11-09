@@ -4,6 +4,7 @@ using Reflex.Injectors;
 using Source.Scripts.Extensions;
 using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Services.StaticData;
+using Source.Scripts.UI.Elements;
 using Source.Scripts.UI.Services;
 using Source.Scripts.UI.Windows;
 using UnityEngine;
@@ -31,12 +32,15 @@ namespace Source.Scripts.UI.Factory
 
         public async UniTask CreateUIRoot()
         {
-            GameObject uiRootPrefab = await _assets.Load<GameObject>(UIRootAddress);
-            _uiRoot = Object.Instantiate(uiRootPrefab).transform;
+            UIRoot uiRootObj = await _assets.Load<GameObject, UIRoot>(UIRootAddress);
+            _uiRoot = Object.Instantiate(uiRootObj).transform;
         }
 
-        public WindowBase CreateWindow(WindowId id) => 
-            InstantiateAndInject(_staticData.ForWindow(id).Prefab, _uiRoot);
+        public async UniTask<WindowBase> CreateWindow(WindowId id)
+        {
+            WindowBase prefab = await _assets.Load<GameObject, WindowBase>(_staticData.ForWindow(id).Address);
+            return InstantiateAndInject(prefab, _uiRoot);
+        }
 
         public void Cleanup()
         {
@@ -44,7 +48,7 @@ namespace Source.Scripts.UI.Factory
             _uiRoot = null;
         }
         
-        private T InstantiateAndInject<T>(T prefab, Transform parent) where T : Component
+        private T InstantiateAndInject<T>(T prefab, Transform parent = null) where T : Component
         {
             T instance = Object.Instantiate(prefab, parent);
 

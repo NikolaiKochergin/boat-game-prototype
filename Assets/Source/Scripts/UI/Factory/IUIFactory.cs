@@ -9,7 +9,7 @@ namespace Source.Scripts.UI.Factory
     {
         UniTask CreateUIRoot();
         void Cleanup();
-        WindowBase CreateWindow(WindowId id);
+        UniTask<WindowBase> CreateWindow(WindowId id);
         UniTaskVoid WarmUp();
     }
 }

@@ -2,6 +2,7 @@
 using Source.Scripts.Infrastructure.States;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace Source.Scripts.Infrastructure
 {
@@ -11,7 +12,7 @@ namespace Source.Scripts.Infrastructure
 
         private void Start()
         {
-            Addressables.LoadSceneAsync("LoadingScene", activateOnLoad: false).Completed += handle =>
+            Addressables.LoadSceneAsync(SceneManager.GetSceneByBuildIndex(0).name, activateOnLoad: false).Completed += handle =>
             {
                 ReflexSceneManager.PreInstallScene(handle.Result.Scene, descriptor => descriptor.OnContainerBuilt += OnContainerBuilt);
                 handle.Result.ActivateAsync();

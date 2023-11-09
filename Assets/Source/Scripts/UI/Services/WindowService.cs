@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Source.Scripts.UI.Factory;
 using Source.Scripts.UI.Windows;
 
@@ -12,10 +13,13 @@ namespace Source.Scripts.UI.Services
         public WindowService(IUIFactory uiFactory) => 
             _uiFactory = uiFactory;
 
-        public void OpenWindow(WindowId windowId)
+        public async UniTaskVoid OpenWindow(WindowId windowId)
         {
             if (_openedWindows.ContainsKey(windowId) == false)
-                _openedWindows.Add(windowId, _uiFactory.CreateWindow(windowId));
+            {
+                WindowBase window = await _uiFactory.CreateWindow(windowId);
+                _openedWindows.Add(windowId,window);
+            }
         }
 
         public void CloseWindow(WindowId windowId)

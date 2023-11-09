@@ -30,5 +30,8 @@ namespace Source.Scripts.Services.StaticData
             _windowConfigs.TryGetValue(windowId, out WindowConfig config)
                 ? config
                 : null;
+
+        public GameConfig ForGameSettings() => 
+            _gameConfig;
     }
 }

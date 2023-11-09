@@ -14,10 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windowConfigs:
   - WindowId: 0
-    Prefab: {fileID: 3317567038308770998, guid: d3e39039cc9ed454bbd92a781e0a7324, type: 3}
+    Address:
+      m_AssetGUID: d3e39039cc9ed454bbd92a781e0a7324
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - WindowId: 1
-    Prefab: {fileID: 4417405223855893571, guid: 84c8ca4f8eb8a5e4f9f9061cb27082db, type: 3}
+    Address:
+      m_AssetGUID: 84c8ca4f8eb8a5e4f9f9061cb27082db
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - WindowId: 2
-    Prefab: {fileID: 5428449286922939187, guid: 8a1d5bc47fbc99b468847a1ce237004b, type: 3}
+    Address:
+      m_AssetGUID: 8a1d5bc47fbc99b468847a1ce237004b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - WindowId: 3
-    Prefab: {fileID: 2279489594685134528, guid: 6952962d549225e4090d2c25e6f64e4c, type: 3}
+    Address:
+      m_AssetGUID: 6952962d549225e4090d2c25e6f64e4c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
+using Reflex.Core;
+using Reflex.Injectors;
 using Source.Scripts.Infrastructure.AssetManagement;
 using Source.Scripts.Logic;
 using Source.Scripts.Player;
@@ -16,40 +19,41 @@ namespace Source.Scripts.Services.Factory
         private readonly List<ISavedProgress> _progressWriters = new List<ISavedProgress>();
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
-        
+        private readonly Container _container;
+
         public IEnumerable<ISavedProgressReader> ProgressReaders => _progressReaders;
+
         public IEnumerable<ISavedProgress> ProgressWriters => _progressWriters;
 
         public GameFactory(IAssets assets,
-            IStaticDataService staticData)
+            IStaticDataService staticData,
+            Container container)
         {
             _assets = assets;
             _staticData = staticData;
+            _container = container;
         }
 
-        public Ship CreateRedShip() => 
-            InstantiateRegistered<Ship>(AssetPath.ShipRed);
-
-        public Ship CreateBlueShip() => 
-            InstantiateRegistered<Ship>(AssetPath.ShipBlue);
-
-        public CinemachineVirtualCamera CreateGameCamera()
+        public void WarmUp()
         {
-            CinemachineVirtualCamera prefab = Resources.Load<CinemachineVirtualCamera>(AssetPath.GameCamera);
-            return Object.Instantiate(prefab);
+            _assets.Load<GameObject>(AssetAddress.ShipRed);
+            _assets.Load<GameObject>(AssetAddress.ShipBlue);
         }
 
-        public TrackPoint CreateTrackPoint()
-        {
-            TrackPoint prefab = Resources.Load<TrackPoint>(AssetPath.TrackPoint);
-            return Object.Instantiate(prefab);
-        }
+        public async UniTask<Ship> CreateRedShip() => 
+            await InstantiateRegistered<Ship>(AssetAddress.ShipRed);
 
-        public Finish CreateFinishLine()
-        {
-            Finish prefab = Resources.Load<Finish>(AssetPath.FinishLine);
-            return Object.Instantiate(prefab);
-        }
+        public async UniTask<Ship> CreateBlueShip() => 
+            await InstantiateRegistered<Ship>(AssetAddress.ShipBlue);
+
+        public async UniTask<CinemachineVirtualCamera> CreateGameCamera() => 
+            await InstantiateAndInject<CinemachineVirtualCamera>(AssetAddress.GameCamera);
+
+        public async UniTask<TrackPoint> CreateTrackPoint() => 
+            await InstantiateAndInject<TrackPoint>(AssetAddress.TrackPoint);
+
+        public async UniTask<Finish> CreateFinishLine() => 
+            await InstantiateAndInject<Finish>(AssetAddress.FinishLine);
 
         public void Cleanup()
         {
@@ -57,12 +61,19 @@ namespace Source.Scripts.Services.Factory
             _progressWriters.Clear();
         }
 
-        private T InstantiateRegistered<T>(string prefabPath) where T : Object, ISavedProgressReader
+        private async UniTask<T> InstantiateRegistered<T>(string address) where T : Component, ISavedProgressReader
         {
-            T prefab = Resources.Load<T>(prefabPath);
-            T newObject = Object.Instantiate(prefab);
+            T newObject = await InstantiateAndInject<T>(address);
             Register(newObject);
 
+            return newObject;
+        }
+
+        private async UniTask<T> InstantiateAndInject<T>(string address) where T : Component
+        {
+            T prefab = await _assets.Load<GameObject, T>(address);
+            T newObject = Object.Instantiate(prefab);
+            AttributeInjector.Inject(newObject, _container);
             return newObject;
         }
 

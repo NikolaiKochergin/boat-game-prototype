@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using Source.Scripts.Services;
 
 namespace Source.Scripts.UI.Services
 {
     public interface IWindowService : IService
     {
-        void OpenWindow(WindowId windowId);
+        UniTaskVoid OpenWindow(WindowId windowId);
         void CloseWindow(WindowId windowId);
         void CloseAllWindows();
     }

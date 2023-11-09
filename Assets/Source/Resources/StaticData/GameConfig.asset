@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51616e8662e4344b5c93480aab92ce4, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  _uiRoot:
+    m_AssetGUID: 1a541fc96bb759449b84157fb40a2a19
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _material:
+    m_AssetGUID: ab9987a78019bb34980e4c976ab1d87e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

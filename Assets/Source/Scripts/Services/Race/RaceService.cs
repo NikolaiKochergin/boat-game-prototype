@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using Source.Scripts.Extensions;
 using Source.Scripts.Logic;
 using Source.Scripts.Player;
@@ -33,10 +34,10 @@ namespace Source.Scripts.Services.Race
         public event Action RedShipWin;
         public event Action BlueShipWin;
 
-        public void PrepareToRace()
+        public async UniTaskVoid PrepareToRace()
         {
-            _redShip = _factory.CreateRedShip();
-            _blueShip = _factory.CreateBlueShip();
+            _redShip = await _factory.CreateRedShip();
+            _blueShip = await _factory.CreateBlueShip();
 
             _redShip.TriggerObserver.TriggerEnter += OnRedShipWin;
             _blueShip.TriggerObserver.TriggerEnter += OnBlueShipWin;
@@ -46,11 +47,11 @@ namespace Source.Scripts.Services.Race
             _redShip.transform.position = new Vector3(-3.5f, 0, 0);
             _blueShip.transform.position = new Vector3(3.5f, 0, 0);
 
-            _trackPoint = _factory.CreateTrackPoint();
+            _trackPoint = await _factory.CreateTrackPoint();
             _trackPoint.StartTrack(_redShip.transform, _blueShip.transform);
             _cameraService.SetTrackPoint(_trackPoint.transform);
 
-            _finishLine = _factory.CreateFinishLine();
+            _finishLine = await _factory.CreateFinishLine();
             _finishLine.transform.position = new Vector3(0, 0, 100);
             
             _input.EnableMenuInput();

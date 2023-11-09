@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 
 namespace Source.Scripts.Services.Race
 {
@@ -8,7 +9,7 @@ namespace Source.Scripts.Services.Race
         float BlueShipPosition { get; }
         event Action RedShipWin;
         event Action BlueShipWin;
-        void PrepareToRace();
+        UniTaskVoid PrepareToRace();
         void StartRace();
         void Cleanup();
     }

@@ -1,3 +1,4 @@
+using Source.Scripts.StaticData;
 using Source.Scripts.UI.Services;
 using Source.Scripts.UI.StaticData;
 
@@ -7,5 +8,6 @@ namespace Source.Scripts.Services.StaticData
     {
         void Load();
         WindowConfig ForWindow(WindowId windowId);
+        GameConfig ForGameSettings();
     }
 }

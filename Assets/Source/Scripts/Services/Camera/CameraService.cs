@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Cysharp.Threading.Tasks;
 using Source.Scripts.Services.Factory;
 using UnityEngine;
 
@@ -11,9 +12,9 @@ namespace Source.Scripts.Services.Camera
         public CameraService(IGameFactory gameFactory) => 
             _gameFactory = gameFactory;
 
-        public void SetTrackPoint(Transform transform)
+        public async UniTaskVoid SetTrackPoint(Transform transform)
         {
-            CinemachineVirtualCamera gameCamera = _gameFactory.CreateGameCamera();
+            CinemachineVirtualCamera gameCamera = await _gameFactory.CreateGameCamera();
 
             gameCamera.Follow = transform;
             gameCamera.LookAt = transform;

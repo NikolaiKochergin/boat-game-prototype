@@ -1,9 +1,10 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Source.Scripts.Services.Camera
 {
     public interface ICameraService : IService
     {
-        void SetTrackPoint(Transform transform);
+        UniTaskVoid SetTrackPoint(Transform transform);
     }
 }
