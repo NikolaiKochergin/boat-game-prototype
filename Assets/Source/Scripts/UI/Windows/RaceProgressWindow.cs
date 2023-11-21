@@ -20,12 +20,6 @@ namespace Source.Scripts.UI.Windows
 
         private void Update()
         {
-            if(_raceService == null)
-                Debug.Log("NUUULLLLL");
-            else
-                Debug.Log("NOOOOOOOTTTTT");
-
-
             _leftSlider.value = _raceService.RedShipPosition;
             _rightSlider.value = _raceService.BlueShipPosition;
         }

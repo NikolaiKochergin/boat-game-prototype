@@ -52,6 +52,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe4edfd19060b1d479446560f820a410
+    m_Address: Finish
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be0eca7909cada8478fa4cf366611a14
+    m_Address: GameVirtualCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62668caff55a6a24d84628c7ed1a7de8
+    m_Address: TrackPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 85f0185453b4e4948bfb1a97253e11f9, type: 2}
   m_SchemaSet:
